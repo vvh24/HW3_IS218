@@ -1,6 +1,5 @@
 import sys
-from decimal import Decimal, InvalidOperation
-from calculator import Calculator  # Assuming Calculator is defined as shown previously
+from calculator import Calculator  # Assuming Calculator is defined elsewhere
 
 class OperationCommand:
     def __init__(self, calculator, operation_name, a, b):
@@ -17,20 +16,35 @@ class OperationCommand:
         else:
             raise ValueError(f"Unknown operation: {self.operation_name}")
 
-def calculate_and_print(a, b, operation_name):
+def calculate_and_print(a, b, operation):
     try:
-        a_decimal, b_decimal = map(Decimal, [a, b])
-        command = OperationCommand(Calculator, operation_name, a_decimal, b_decimal)
-        result = command.execute()
-        print(f"The result of {a} {operation_name} {b} is equal to {result}")
-    except InvalidOperation:
-        print(f"Invalid number input: {a} or {b} is not a valid number.")
-    except ZeroDivisionError:
-        print("Error: Division by zero.")
-    except ValueError as e:
-        print(e)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        # Convert input values to float
+        a = float(a)
+        b = float(b)
+    except ValueError:
+        raise ValueError(f"Invalid number input: {a} or {b} is not a valid number.")
+
+    # Perform the operations and calculate result
+    if operation == 'add':
+        result = a + b
+    elif operation == 'subtract':
+        result = a - b
+    elif operation == 'multiply':
+        result = a * b
+    elif operation == 'divide':
+        if b == 0:
+            raise ValueError("Cannot divide by zero")
+        result = a / b
+    else:
+        raise ValueError(f"Unknown operation: {operation}")
+    
+    # Remove decimal point if result is a whole number
+    if result.is_integer():
+        result = int(result)
+        a = int(a)
+        b = int(b)
+    
+    print(f"The result of {a} {operation} {b} is equal to {result}")
 
 def main():
     if len(sys.argv) != 4:
@@ -38,7 +52,12 @@ def main():
         sys.exit(1)
 
     _, a, b, operation_name = sys.argv
-    calculate_and_print(a, b, operation_name)
+
+    try:
+        calculate_and_print(a, b, operation_name)
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()
