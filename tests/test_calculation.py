@@ -1,7 +1,3 @@
-"""
-This module contains tests for the Calculation class and various arithmetic operations.
-"""
-
 from decimal import Decimal
 import pytest
 from calculator.calculation import Calculation
@@ -41,4 +37,3 @@ def test_divide_by_zero():
     calc = Calculation(Decimal('10'), Decimal('0'), divide)
     with pytest.raises(ValueError, match="Cannot divide by zero"):
         calc.perform()
-        
