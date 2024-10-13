@@ -33,11 +33,11 @@ def load_plugins():
     
     return plugins
 
-
 # Command handler class to manage operations
 class CommandHandler:
     def __init__(self):
         self.commands = load_plugins()  # Load the plugins dynamically
+        self.commands['menu'] = self.show_menu  # Add 'menu' as a built-in command
 
     def execute_command(self, command, a, b):
         if command in self.commands:
@@ -45,7 +45,10 @@ class CommandHandler:
         else:
             raise ValueError(f"Unknown command: {command}")
 
+    def show_menu(self, *_):
+        print("Available commands: " + ", ".join(self.commands.keys()))
 
+# REPL function to interact with the user
 def repl():
     handler = CommandHandler()
     print("Available commands: " + ", ".join(handler.commands.keys()))
@@ -70,7 +73,6 @@ def repl():
             print(e)
         except Exception as e:
             print(f"Error: {e}")
-
 
 if __name__ == '__main__':
     repl()
