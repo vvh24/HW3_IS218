@@ -40,13 +40,22 @@ def test_unknown_command():
 # Test the 'menu' command output
 def test_menu_command(capsys):
     handler = CommandHandler()
-    handler.show_menu()
+
+    # Temporarily suppress print output while loading commands
+    result = handler.execute_command("menu", None, None)
+
     captured = capsys.readouterr()
-    assert "add" in captured.out
-    assert "subtract" in captured.out
-    assert "multiply" in captured.out
-    assert "divide" in captured.out
-    assert "menu" in captured.out
+
+    # Remove 'Loaded command' lines from captured output for cleaner testing
+    cleaned_output = "\n".join([line for line in captured.out.splitlines() if not line.startswith("Loaded command")])
+
+    # Check if all expected commands are present, regardless of order
+    assert "Available commands:" in cleaned_output
+    assert "add" in cleaned_output
+    assert "subtract" in cleaned_output
+    assert "multiply" in cleaned_output
+    assert "divide" in cleaned_output
+    assert "menu" in cleaned_output
 
 # Test multiple operations in sequence
 def test_multiple_operations():
