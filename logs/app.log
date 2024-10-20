@@ -1,0 +1,8 @@
+2024-10-20 14:01:37,820 - DEBUG - Converted inputs to floats: 1.0, 2.0
+2024-10-20 14:01:37,820 - INFO - The result of 1 add 2 is equal to 3
+2024-10-20 14:02:08,903 - DEBUG - Converted inputs to floats: 2.0, 2.0
+2024-10-20 14:02:08,903 - INFO - The result of 2 multiply 2 is equal to 4
+2024-10-20 14:02:40,197 - DEBUG - Converted inputs to floats: 9.0, 0.0
+2024-10-20 14:02:40,197 - ERROR - Attempted to divide by zero
+2024-10-20 14:02:40,197 - ERROR - Error in calculation: Cannot divide by zero
+2024-10-20 14:02:40,197 - ERROR - Exiting due to error: Cannot divide by zero
